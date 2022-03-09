@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.util.Optional;
 
 import org.aspectj.lang.annotation.Before;
+import org.joda.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.abc.cowin1.entity.UserEntity;
 import com.abc.cowin1.exception.UserNotFoundException;
+import com.abc.cowin1.model.Appointment;
 import com.abc.cowin1.model.User;
 import com.abc.cowin1.repository.UserRepository;
 import com.abc.cowin1.util.EntityModelUtil;
@@ -165,6 +167,38 @@ public class UserServiceTest {
 		userService.deleteUser(user.getUserId());
 
 		verify(userRepository, times(1)).deleteById(userId);
+	}
+
+	@Test
+	public void updateOfCategory() {
+
+		UserEntity userEntity = new UserEntity();
+
+		User user = new User();
+
+		user.setAddress("Bandra");
+		user.setAge(23);
+		user.setAppointmentId(12);
+		user.setCenterId(69);
+		user.setCity("Mumbai");
+		user.setDistrict("Mumbai");
+		user.setIdproof("7819 5080 9074");
+		user.setMobile("7890776545");
+		user.setPincode("876609");
+		user.setState("Maharashtra");
+		user.setUserId(29);
+		user.setUserName("Abhishek");
+
+		Optional<UserEntity> optionalUser = Optional.of(userEntity);
+
+		when(userRepository.findById(29)).thenReturn(optionalUser);
+
+		UserEntity updatedUserEntity = userRepository.save(userEntity);
+
+		entityModelUtil.userEntityToModel(updatedUserEntity);
+		userService.updateUser(user);
+
+		verify(userRepository, times(1)).save(entityModelUtil.userModelToEntity(user));
 	}
 
 }

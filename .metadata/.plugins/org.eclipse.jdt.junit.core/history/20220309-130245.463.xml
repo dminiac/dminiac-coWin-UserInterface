@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="UserServiceTest" project="cowin-1" tests="4" started="4" failures="0" errors="0" ignored="0">
+  <testsuite name="com.abc.cowin1.service.UserServiceTest" time="0.054" displayname="UserServiceTest" uniqueid="[engine:junit-jupiter]/[class:com.abc.cowin1.service.UserServiceTest]">
+    <testcase name="testSaveUser" classname="com.abc.cowin1.service.UserServiceTest" time="0.031" displayname="testSaveUser()" uniqueid="[engine:junit-jupiter]/[class:com.abc.cowin1.service.UserServiceTest]/[method:testSaveUser()]"/>
+    <testcase name="testGetUserDetails" classname="com.abc.cowin1.service.UserServiceTest" time="0.007" displayname="testGetUserDetails()" uniqueid="[engine:junit-jupiter]/[class:com.abc.cowin1.service.UserServiceTest]/[method:testGetUserDetails()]"/>
+    <testcase name="testDeleteUser" classname="com.abc.cowin1.service.UserServiceTest" time="0.007" displayname="testDeleteUser()" uniqueid="[engine:junit-jupiter]/[class:com.abc.cowin1.service.UserServiceTest]/[method:testDeleteUser()]"/>
+    <testcase name="testGetUserByIdNotFound" classname="com.abc.cowin1.service.UserServiceTest" time="0.005" displayname="testGetUserByIdNotFound()" uniqueid="[engine:junit-jupiter]/[class:com.abc.cowin1.service.UserServiceTest]/[method:testGetUserByIdNotFound()]"/>
+  </testsuite>
+</testrun>

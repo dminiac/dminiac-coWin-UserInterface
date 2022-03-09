@@ -1,0 +1,56 @@
+package com.abc.cowin1.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.abc.cowin1.entity.UserEntity;
+import com.abc.cowin1.exception.UserNotFoundException;
+import com.abc.cowin1.model.User;
+import com.abc.cowin1.repository.UserRepository;
+import com.abc.cowin1.util.EntityModelUtil;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Override
+	public User saveUser(User user) {
+
+		UserEntity userEntity = userRepository.save(EntityModelUtil.UserModelToEntity(user));
+
+		return EntityModelUtil.UserEntityToModel(userEntity);
+	}
+
+	@Override
+	public User getByState(String state) {
+
+		UserEntity UserEntity = userRepository.findByState(state);
+
+		return EntityModelUtil.UserEntityToModel(UserEntity);
+	}
+
+	@Override
+	public User getByDistrict(String district) {
+		UserEntity UserEntity = userRepository.findByDistrict(district);
+
+		return EntityModelUtil.UserEntityToModel(UserEntity);
+	}
+
+	@Override
+	public User getByPincode(int pincode) {
+
+		Optional<UserEntity> optionalUser = userRepository.findById(pincode);
+
+		if (optionalUser.isEmpty()) {
+			throw new UserNotFoundException("Sorry! Center is not existing with pincode: " + pincode);
+		}
+		return EntityModelUtil.UserEntityToModel(optionalUser.get());
+	}
+	
+	
+
+}

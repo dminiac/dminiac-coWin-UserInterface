@@ -1,0 +1,61 @@
+package com.abc.cowin1.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.abc.cowin1.entity.UserEntity;
+import com.abc.cowin1.exception.UserNotFoundException;
+import com.abc.cowin1.model.Appointment;
+import com.abc.cowin1.model.Details;
+import com.abc.cowin1.model.User;
+import com.abc.cowin1.model.VaccinationCenter;
+import com.abc.cowin1.repository.UserRepository;
+import com.abc.cowin1.util.EntityModelUtil;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private AppointmentService appointmentService;
+	
+	@Autowired
+	private VaccinationCenterService vaccinationCenterService;
+
+	@Override
+	// Get user by ID
+	public Details getUserById(int userId) {
+		Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+		Details details = new Details();
+
+		if (optionalUser.isEmpty()) {
+			throw new UserNotFoundException("Sorry ! User is not available with id :" + userId);
+
+		}
+
+		UserEntity userEntity = optionalUser.get();
+		details.setUser(EntityModelUtil.userEntityToModel(userEntity));
+		Appointment appointment = appointmentService.getAppointmentDetails(userEntity.getAppointmentId());
+		details.setAppointment(appointment);
+		
+		VaccinationCenter vaccinationCenter = vaccinationCenterService.getVaccinationCenterDetails(userId);
+		details.setVaccinationCenter(vaccinationCenter);
+
+		return details;
+	}
+
+	@Override
+	// To add user
+	public User addUser(User user) {
+		UserEntity userEntity = userRepository.save(EntityModelUtil.userModelToEntity(user));
+		return EntityModelUtil.userEntityToModel(userEntity);
+	}
+	
+	
+
+}

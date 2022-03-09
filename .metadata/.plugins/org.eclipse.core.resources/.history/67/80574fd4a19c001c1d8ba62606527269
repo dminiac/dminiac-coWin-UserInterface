@@ -1,0 +1,91 @@
+package com.abc.cowin1.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.abc.cowin1.entity.UserEntity;
+import com.abc.cowin1.exception.UserNotFoundException;
+import com.abc.cowin1.model.Appointment;
+import com.abc.cowin1.model.Details;
+import com.abc.cowin1.model.User;
+import com.abc.cowin1.repository.UserRepository;
+import com.abc.cowin1.util.EntityModelUtil;
+
+@Service
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	private AppointmentService appointmentService;
+
+	@Override
+	public User saveUser(User user) {
+
+		UserEntity userEntity = userRepository.save(EntityModelUtil.UserModelToEntity(user));
+
+		return EntityModelUtil.UserEntityToModel(userEntity);
+	}
+
+	@Override
+	public User getByState(String state) {
+
+		UserEntity UserEntity = userRepository.findByState(state);
+
+		return EntityModelUtil.UserEntityToModel(UserEntity);
+	}
+
+	@Override
+	public User getByDistrict(String district) {
+		UserEntity UserEntity = userRepository.findByDistrict(district);
+
+		return EntityModelUtil.UserEntityToModel(UserEntity);
+	}
+
+	@Override
+	public User getByPincode(int pincode) {
+
+		Optional<UserEntity> optionalUser = userRepository.findById(pincode);
+
+		if (optionalUser.isEmpty()) {
+			throw new UserNotFoundException("Sorry! Center is not existing with pincode: " + pincode);
+		}
+		return EntityModelUtil.UserEntityToModel(optionalUser.get());
+	}
+
+	@Override
+	public User updateUser(User user) {
+		Optional<UserEntity> optionalUserEntity = userRepository.findById(user.getUserId());
+
+		if (optionalUserEntity.isEmpty()) {
+			throw new UserNotFoundException("Sorry! User is not existing with id: " + user.getUserId());
+		}
+
+		UserEntity updatedUserEntity = userRepository.save(EntityModelUtil.UserModelToEntity(user));
+		System.out.println("Updated the user details");
+
+		return EntityModelUtil.UserEntityToModel(updatedUserEntity);
+	}
+
+	@Override
+	public Details getUserById(int userId) {
+		Optional<UserEntity> optionalUser = userRepository.findById(userId);
+
+		Details details = new Details();
+
+		if (optionalUser.isEmpty()) {
+			throw new UserNotFoundException("Sorry ! User is not available with id :" + userId);
+
+		}
+
+		UserEntity userEntity = optionalUser.get();
+		details.setUser(EntityModelUtil.UserEntityToModel(userEntity));
+		Appointment appointment = appointmentService.getAppointmentDetails(userEntity.getUserId());
+		details.setAppointment(null);
+
+		return details;
+	}
+
+}

@@ -1,0 +1,38 @@
+package com.abc.cowin1.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.abc.cowin1.model.Appointment;
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
+@Service
+public class AppointmentService {
+
+	@Autowired
+	private RestTemplate restTemplate;
+
+	@HystrixCommand(fallbackMethod = "AppointmentServiceFallBack")
+	public Appointment getAppointmentDetails(int appointmentId) {
+
+		String resourceUrl = " " + appointmentId;
+
+		Appointment Appointment = restTemplate.getForObject(resourceUrl, Appointment.class);
+
+		return Appointment;
+
+	}
+
+	@SuppressWarnings("unused")
+	private Appointment AppointmentServiceFallBack(int AppointmentId) {
+
+		Appointment Appointment = new Appointment();
+		Appointment.setAppointmentId(AppointmentId);
+
+		System.out.println("Appointment Service is down!!! fallback route enabled...");
+		return Appointment;
+
+	}
+
+}

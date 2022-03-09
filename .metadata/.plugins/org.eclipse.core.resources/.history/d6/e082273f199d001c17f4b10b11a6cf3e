@@ -1,0 +1,22 @@
+package com.abc.cowin1.service;
+
+import com.abc.cowin1.model.Details;
+import com.abc.cowin1.model.User;
+
+
+public interface UserService {
+
+	public User saveUser(User user);
+
+	public User getByState(String state);
+	
+	public User getByDistrict(String district);
+	
+	public User getByPincode(String pincode);
+	
+	public User updateUser(User user); //to update his user details
+	
+	public Details getUserById(int userId); //only can view his own details
+
+}
+

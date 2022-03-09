@@ -1,0 +1,9 @@
+package com.abc.cowin1.model;
+
+public class Details {
+	
+	private User user;
+	
+	private Appointment appointment;
+
+}

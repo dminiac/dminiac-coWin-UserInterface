@@ -1,0 +1,42 @@
+package com.abc.cowin1.util;
+
+import com.abc.cowin1.entity.UserEntity;
+import com.abc.cowin1.model.User;
+
+public class EntityModelUtil {
+
+	public static UserEntity UserModelToEntity(User User) {
+
+		UserEntity UserEntity = new UserEntity();
+		UserEntity.setUserId(User.getUserId());
+		UserEntity.setUserName(User.getUserName());
+		UserEntity.setAddress(User.getAddress());
+		UserEntity.setCity(User.getCity());
+		UserEntity.setDistrict(User.getDistrict());
+		UserEntity.setState(User.getState());
+		UserEntity.setPincode(User.getPincode());
+		UserEntity.setMobile(User.getMobile());
+		UserEntity.setAge(User.getAge());
+		UserEntity.setIdproof(User.getIdproof());
+
+		return UserEntity;
+	}
+
+	public static User UserEntityToModel(UserEntity UserEntity) {
+
+		User User = new User();
+		User.setUserId(UserEntity.getUserId());
+		User.setUserName(UserEntity.getUserName());
+		User.setAddress(UserEntity.getAddress());
+		User.setCity(UserEntity.getCity());
+		User.setDistrict(UserEntity.getDistrict());
+		User.setState(UserEntity.getState());
+		User.setPincode(UserEntity.getPincode());
+		User.setMobile(UserEntity.getMobile());
+		User.setAge(UserEntity.getAge());
+		User.setIdproof(UserEntity.getIdproof());
+
+		return User;
+	}
+
+}

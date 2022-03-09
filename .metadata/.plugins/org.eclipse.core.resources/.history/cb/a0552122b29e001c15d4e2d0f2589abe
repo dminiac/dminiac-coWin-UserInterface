@@ -1,0 +1,94 @@
+package com.abc.cowin1.service;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+
+import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.abc.cowin1.entity.UserEntity;
+import com.abc.cowin1.model.User;
+import com.abc.cowin1.repository.UserRepository;
+
+@SpringBootTest
+public class UserServiceTest {
+
+	@SpringBootTest(classes = PostServiceTest.class)
+	public class PostServiceTest {
+
+		@InjectMocks
+		private UserService userService = new UserServiceImpl();
+
+		@Mock
+		private UserRepository userRepository;
+
+		@Before(value = "")
+		public void init() {
+			MockitoAnnotations.openMocks(this);
+		}
+
+//		@Test
+//		public void testSaveUser() {
+//
+//			UserEntity user = new UserEntity();
+//
+//			user.setAddress("Bandra");
+//			user.setAge(23);
+//			user.setAppointmnetId(12);
+//			user.setCenterId(69);
+//			user.setCity("Mumbai");
+//			user.setDistrict("Mumbai");
+//			user.setIdproof("7819 5080 9074");
+//			user.setMobile("7890776545");
+//			user.setPincode("876609");
+//			user.setState("Maharashtra");
+//			user.setUserId(0);
+//			user.setUserName("Abhishek");
+//
+//			when(userRepository.save(any(UserEntity.class))).thenReturn(user);
+//			User user = userService.createPost(EntityModelUtil.uEntityToModel(user));
+//			assertThat(post.getCategoryName()).isNotNull();
+//			assertEquals(post1.getCategoryName(), user.getCategoryName());
+//
+//		}
+
+		@Test
+		public void testGetUserDetails() {
+
+			UserEntity user = new UserEntity();
+
+			user.setAddress("Bandra");
+			user.setAge(23);
+			user.setAppointmnetId(12);
+			user.setCenterId(69);
+			user.setCity("Mumbai");
+			user.setDistrict("Mumbai");
+			user.setIdproof("7819 5080 9074");
+			user.setMobile("7890776545");
+			user.setPincode("876609");
+			user.setState("Maharashtra");
+			user.setUserId(29);
+			user.setUserName("Abhishek");
+
+			Optional<UserEntity> optionalUser = Optional.of(user);
+			int userId = 29;
+
+			when(userRepository.findById(29)).thenReturn(optionalUser);
+
+			User existingUser = userService.getUserDetails(userId);
+
+			assertEquals(user.getAddress(), existingUser.getAddress());
+
+		}
+
+	}
+
+}

@@ -1,0 +1,15 @@
+server.port = 8086
+
+spring.datasource.url = jdbc:postgresql://localhost:5432/mydb
+spring.datasource.username = ashishrc
+spring.datasource.password = 98926
+spring.jpa.hibernate.ddl-auto = update
+
+server.servlet.context-path=/cowin1
+
+#spring.mvc.pathmatch.matching-strategy=ant-path-matcher
+
+spring.application.name=cowin-user-service
+
+management.endpoints.web.exposure.include= *
+
